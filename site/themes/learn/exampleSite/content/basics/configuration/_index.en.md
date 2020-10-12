@@ -1,18 +1,27 @@
-baseURL = "/"
-languageCode = "en-us"
-title = "vSphere with Tanzu 101"
-theme = "learn"
+---
+date: 2016-04-09T16:50:16+02:00
+title: Configuration
+weight: 20
+---
+
+## Global site parameters
+
+On top of [Hugo global configuration](https://gohugo.io/overview/configuration/), **Hugo-theme-learn** lets you define the following parameters in your `config.toml` (here, values are default).
+
+Note that some of these parameters are explained in details in other sections of this documentation.
+
+```toml
 [params]
   # Prefix URL to edit current page. Will display an "Edit this page" button on top right hand corner of every page.
   # Useful to give opportunity to people to create merge request for your doc.
   # See the config.toml file from this documentation site to have an example.
-  editURL = "https://github.com/modernappsninja/testcourse/"
+  editURL = ""
   # Author of the site, will be used in meta information
-  author = "test author"
+  author = ""
   # Description of the site, will be used in meta information
-  description = "test description"
+  description = ""
   # Shows a checkmark for visited pages on the menu
-  showVisitedLinks = true
+  showVisitedLinks = false
   # Disable search function. It will hide search bar
   disableSearch = false
   # Javascript and CSS cache are automatically busted when new version of site is generated.
@@ -25,7 +34,7 @@ theme = "learn"
   # When using mulitlingual website, disable the switch language button.
   disableLanguageSwitchingButton = false
   # Hide breadcrumbs in the header and only show the current page title
-  disableBreadcrumb = false
+  disableBreadcrumb = true
   # If set to true, prevents Hugo from including the mermaid module if not needed (will reduce load times and traffic)
   disableMermaid = false
   # Specifies the remote location of the mermaid js
@@ -35,11 +44,34 @@ theme = "learn"
   # Order sections in menu by "weight" or "title". Default to "weight"
   ordersectionsby = "weight"
   # Change default color scheme with a variant one. Can be "red", "blue", "green".
-  themeVariant = "blue"
+  themeVariant = ""
   # Provide a list of custom css files to load relative from the `static/` folder in the site root.
-  custom_css = ["clr-ui.min.css"]
+  custom_css = ["css/foo.css", "css/bar.css"]
   # Change the title separator. Default to "::".
   titleSeparator = "-"
-# For search functionality
+```
+
+## Activate search
+
+If not already present, add the follow lines in the same `config.toml` file.
+
+```toml
 [outputs]
 home = [ "HTML", "RSS", "JSON"]
+```
+
+Learn theme uses the last improvement available in hugo version 20+ to generate a json index file ready to be consumed by lunr.js javascript search engine.
+
+> Hugo generate lunrjs index.json at the root of public folder.
+> When you build the site with `hugo server`, hugo generates it internally and of course it doesn’t show up in the filesystem
+
+## Mermaid
+
+The mermaid configuration parameters can also be set on a specific page. In this case, the global parameter would be overwritten by the local one.
+
+> Example:
+>
+> Mermaid is globally disabled. By default it won't be loaded by any page.  
+> On page "Architecture" you need a class diagram. You can set the mermaid parameters locally to only load mermaid on this page (not on the others).
+
+You also can disable mermaid for specific pages while globally enabled.
